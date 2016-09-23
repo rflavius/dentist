@@ -1,2 +1,2 @@
 # dentist
-DentistOnline framework
+DentistOnline Developer framework
