@@ -11,6 +11,5 @@ if(!in_array($_SERVER['REMOTE_ADDR'], $allowedIPs))
 }
 
 require_once 'library/mandrillEmails.php';
-
 $email = new mandrillEmails();
 print_r($email->getUserInfo());
