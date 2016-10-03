@@ -131,12 +131,7 @@ class mandrillEmails
 		try
 		{
 			$template_name = $name;
-			$template_content = array(
-										array(
-												'name' => 'nume',
-												'content' => 'Flavius Rosu'
-												)
-										);
+			$template_content = array();
 			$message = array(
 								'html' => '<p>This is just an example</p>',
 								'text' => 'Example text content',
@@ -167,6 +162,10 @@ class mandrillEmails
 																array(
 																	'name' => 'COMPANY',
 																	'content' => 'DentistOnline Company'
+																),
+																array(
+																'name' => 'numele',
+																'content' => 'Flavius Rosu Romica'
 																),
 															)
 						);
