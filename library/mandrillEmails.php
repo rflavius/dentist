@@ -49,4 +49,51 @@ class mandrillEmails
 			throw $e;
 		}
 	}
+	
+	/**
+	 * here we actually send the email
+	 * @access public
+	 * @param
+	 * @return boolean
+	 * @throws Mandrill_Error
+	 */
+	public function sendEmail()
+	{
+		try {
+			$message = array(
+								'html' => '<p>This is just an example</p>',
+								'text' => 'Example text content',
+								'subject' => 'example subject',
+								'from_email' => 'admin@dentistonline.ro',
+								'from_name' => 'DentistOnline',
+								'to' => array(
+												array(
+																'email' => 'flavius@rospace.com',
+																'name' => 'Flavius Rosu',
+																'type' => 'to'
+												),
+												array(
+																'email' => 'flavius_r2002@yahoo.com',
+																'name' => 'Flavius Rosu',
+																'type' => 'bcc'
+												)
+								),
+								'headers' => array('Reply-To' => 'admin@dentistonline.ro'),
+							);
+			$async = false;
+			$ip_pool = 'Main Pool';
+			$send_at = 'example send_at';
+			$result = $mandrill->messages->send($message);
+			print_r($result);
+		}
+		catch(Mandrill_Error $e)
+		{
+			// Mandrill errors are thrown as exceptions
+			echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
+			// A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+			throw $e;
+		}
+	}
+	
+	
 }

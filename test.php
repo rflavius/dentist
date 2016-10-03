@@ -13,4 +13,4 @@ require_once('vendor/autoload.php');
 require_once 'library/mandrillEmails.php';
 
 $email = new mandrillEmails();
-print_r($email->getUserInfo());
+$email->sendEmail();
