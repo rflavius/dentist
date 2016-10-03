@@ -9,7 +9,7 @@ if(!in_array($_SERVER['REMOTE_ADDR'], $allowedIPs))
 	die('NOT allowed !');
 }
 
-$m = new Mandrill('JHxkBlCuxOCLY9Pm9npwag');
+$m = new \Mandrill('JHxkBlCuxOCLY9Pm9npwag');
 print_r($m);exit;
 
 require_once 'library/mandrillEmails.php';
