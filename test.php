@@ -3,7 +3,7 @@
  * here we will test the mandrill library
  */
 
-require_once('vendor/mandrill/mandrill/src/Mandrill.php');
+require_once('vendor/autoload.php');
 
 $allowedIPs = array('89.34.170.32');
 if(!in_array($_SERVER['REMOTE_ADDR'], $allowedIPs))
