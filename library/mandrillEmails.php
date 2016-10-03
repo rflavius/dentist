@@ -156,7 +156,19 @@ class mandrillEmails
 												)
 								),
 								'headers' => array('Reply-To' => 'admin@dentistonline.ro'),
-								'inline_css' => true
+								'inline_css' => true,
+								'merge' => true,
+								'merge_language' => 'mailchimp',
+								'global_merge_vars' => array(
+																array(
+																	'name' => 'subject',
+																	'content' => 'merge subject content'
+																),
+																array(
+																	'name' => 'COMPANY',
+																	'content' => 'DentistOnline Company'
+																),
+															)
 						);
 			$result = $this->mandrill->messages->sendTemplate($template_name, $template_content, $message);
 			print_r($result);
