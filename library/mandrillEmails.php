@@ -95,5 +95,22 @@ class mandrillEmails
 		}
 	}
 	
+	public function getTemplateInfo($name)
+	{
+		try
+		{
+			$result = $this->mandrill->templates->info($name);
+			print_r($result);
+			return true;
+		} 
+		catch(Mandrill_Error $e)
+		{
+			// Mandrill errors are thrown as exceptions
+			echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
+			// A mandrill error occurred: Mandrill_Invalid_Key - Invalid API key
+			throw $e;
+		}
+	}
+	
 	
 }

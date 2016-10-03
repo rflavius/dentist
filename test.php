@@ -13,4 +13,5 @@ require_once('vendor/autoload.php');
 require_once 'library/mandrillEmails.php';
 
 $email = new mandrillEmails();
-$email->sendEmail();
+$tpl_name = 'joinUS v2.0';
+$email->getTemplateInfo($tpl_name);
