@@ -95,6 +95,13 @@ class mandrillEmails
 		}
 	}
 	
+	/**
+	 * return the template info
+	 * @access public
+	 * @param string $name
+	 * @throws Mandrill_Error
+	 * @return boolean
+	 */
 	public function getTemplateInfo($name)
 	{
 		try
@@ -112,5 +119,55 @@ class mandrillEmails
 		}
 	}
 	
+	/**
+	 * here we send an email using a template
+	 * @access public
+	 * @param string $name
+	 * @throws Mandrill_Error
+	 * @return boolean
+	 */
+	public function sendTemplateEmail($name)
+	{
+		try
+		{
+			$template_name = $name;
+			$template_content = array(
+										array(
+												'name' => 'nume',
+												'content' => 'Flavius Rosu'
+												)
+										);
+			$message = array(
+								'html' => '<p>This is just an example</p>',
+								'text' => 'Example text content',
+								'subject' => 'example subject',
+								'from_email' => 'admin@dentistonline.ro',
+								'from_name' => 'DentistOnline',
+								'to' => array(
+												array(
+													'email' => 'flavius@rospace.com',
+													'name' => 'Flavius Rosu',
+													'type' => 'to'
+												),
+												array(
+													'email' => 'flavius_r2002@yahoo.com',
+													'name' => 'Flavius Rosu',
+													'type' => 'bcc'
+												)
+								),
+								'headers' => array('Reply-To' => 'admin@dentistonline.ro'),
+						);
+			$result = $mandrill->messages->sendTemplate($template_name, $template_content, $message);
+			print_r($result);
+			return true;
+		}
+		catch(Mandrill_Error $e)
+		{
+			// Mandrill errors are thrown as exceptions
+			echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
+			// A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+			throw $e;
+		}
+	}
 	
 }

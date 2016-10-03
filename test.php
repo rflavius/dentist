@@ -14,4 +14,5 @@ require_once 'library/mandrillEmails.php';
 
 $email = new mandrillEmails();
 $tpl_name = 'joinUS v2.0';
-$email->getTemplateInfo($tpl_name);
+//$email->getTemplateInfo($tpl_name);
+$email->sendTemplateEmail($tpl_name);
