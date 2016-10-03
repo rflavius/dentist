@@ -156,6 +156,7 @@ class mandrillEmails
 												)
 								),
 								'headers' => array('Reply-To' => 'admin@dentistonline.ro'),
+								'inline_css' => true
 						);
 			$result = $this->mandrill->messages->sendTemplate($template_name, $template_content, $message);
 			print_r($result);
