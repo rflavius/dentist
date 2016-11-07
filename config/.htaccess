@@ -1,0 +1,3 @@
+Deny from allOptions All -Indexes
+Options All -Indexes
+

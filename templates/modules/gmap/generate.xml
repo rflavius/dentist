@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<markers>
+	<!-- BEGIN display -->
+	<marker name='{NAME}' address='{ADDRESS}' formated_address='{FORMATED_ADDRESS}' lat='{LAT}' lng='{LNG}' type='{TYPE}' description='{DESCRIPTION}' img='{IMG}' phone='{PHONE}' localitate='{LOCALITATE}' judet='{JUDET}' level='{LEVEL}' cabID='{CABID}' date='{DATE}' center_lat='{CENTER_LAT}' center_lng='{CENTER_LNG}'></marker>
+	<!-- END display -->
+</markers>

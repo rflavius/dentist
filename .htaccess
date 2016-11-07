@@ -1,0 +1,48 @@
+# compress text, html, javascript, css, xml:
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE text/js
+AddOutputFilterByType DEFLATE text/javascript
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+AddOutputFilterByType DEFLATE application/json
+
+# Or, compress certain file types by extension:
+<files *.html>
+SetOutputFilter DEFLATE
+</files>
+
+#set up the HTTP header for broser cache
+# 1 WEEK
+<FilesMatch "\.(jpg|jpeg|png|gif|swf|ico|css|js|JPG|woff)$">
+    Header set Cache-Control "max-age=604800, public"
+</FilesMatch>
+
+#SetEnv APPLICATION_ENV development
+#SetEnv APPLICATION_ENV staging
+SetEnv APPLICATION_ENV production
+
+DirectoryIndex index.php  
+RewriteEngine  on   
+RewriteBase    /   
+RewriteCond %{REQUEST_FILENAME} !-f  
+RewriteCond %{REQUEST_FILENAME} !-d  
+RewriteRule ^(.*)$                             index.php?p=$1 [L] 
+RewriteCond %{HTTP_HOST} ^dentistonline.ro [NC]
+RewriteRule ^(.*)$ http://www.dentistonline.ro/$1 [L,R=301] 
+
+<Files 403.shtml>
+order allow,deny
+allow from all
+</Files>
+
+deny from 89.34.225.20
+deny from 217.31.54.147
+deny from 82.137.41.223
+deny from 77.81.176.250
+

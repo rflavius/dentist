@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /beta/
+Disallow: /cgi-bin/
+Disallow: /admin/
+Disallow: /admin_utilizator/

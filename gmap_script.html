@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+      	<title>Find latitude and longitude with Google Maps</title>
+
+ <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxSPW5CJgpdgO_s4yyMovOaVh_KvvhSfpvagV18eOyDWu7VytS6Bi1CWxw"
+      type="text/javascript"></script>
+    <script type="text/javascript">
+
+    var map = null;
+    var geocoder = null;
+
+    function initialize() {
+      if (GBrowserIsCompatible()) {
+        map = new GMap2(document.getElementById("map"));
+        map.setCenter(new GLatLng(45.629149, 25.639343), 6);
+        map.setUIToDefault();
+        geocoder = new GClientGeocoder();
+      }
+    }
+
+    function showAddress(address) {
+      if (geocoder) {
+        geocoder.getLatLng(
+          address,
+          function(point) {
+            if (!point) {
+              alert(address + " not found");
+            } else {
+              map.setCenter(point, 15);
+              var marker = new GMarker(point, {draggable: true});
+              map.addOverlay(marker);
+              document.getElementById("lat").innerHTML = point.lat().toFixed(5);
+       	   		document.getElementById("lng").innerHTML = point.lng().toFixed(5);
+              GEvent.addListener(marker, "dragend", function() 
+            {
+            	  var pt = marker.getPoint();
+         	     map.panTo(pt);
+               document.getElementById("lat").innerHTML = pt.lat().toFixed(5);
+         	     document.getElementById("lng").innerHTML = pt.lng().toFixed(5);
+                 });
+             }
+          }
+        );
+      }
+    }
+    </script>
+
+
+</head>
+
+  
+<body onload='initialize()'>
+
+  <form action="#" name='address_location'>
+     <p>        
+      <input type="text" size="60" name="address" value="" />
+      <input type="button" value="Search!" onClick="showAddress(document.address_location.address.value);" />
+      </p>
+    </form>
+
+ <p align="left">
+ 
+ <table  bgcolor="#FFFFCC" width="300">
+  <tr>
+    <td><b>Latitude</b></td>
+    <td><b>Longitude</b></td>
+  </tr>
+  <tr>
+    <td id="lat"></td>
+    <td id="lng"></td>
+  </tr>
+</table>
+ </p>
+  <p>
+  <div align="center" id="map" style="width: 600px; height: 400px"><br/></div>
+   </p>
+  </div>
+
+</body>
+
+</html>

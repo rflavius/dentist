@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<!-- BEGIN display -->
+	<url>
+		<loc>{LINK}</loc>
+		<lastmod>{LAST_MOD}</lastmod>
+		<changefreq>{CHANGE_FREQ}</changefreq>
+		<priority>{PRIORITY}</priority>
+	</url>
+	<!-- END display -->
+</urlset>
