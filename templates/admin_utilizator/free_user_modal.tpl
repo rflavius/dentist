@@ -4,7 +4,7 @@
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-dismiss="freeUserModal">&times;</button>
 				<h4 class="modal-title">DentistOnline.ro platforma stomatologica nr.1 din Romania!</h4>
 			</div>
 			<div class="modal-body">
@@ -38,7 +38,7 @@
 				<div class='row'>
 					<h4>Daca doriti modificarea pachetului de promovare va rugam sa ne contactati prin email la: admin@dentistonline.ro , sau telefonic la: 0727.380.368</h4>
 					<br>
-					<a href="http://www.dentistonline.ro/admin_utilizator/?page=user.publicitate" target='_blank' class="btn btn-info btn-lg">Vezi oferta preturi.</a>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" data-dismiss="modal">Poate mai tarziu.</button>
+					<a href="http://www.dentistonline.ro/admin_utilizator/?page=user.publicitate" target='_blank' class="btn btn-info btn-lg">Vezi oferta preturi.</a>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" data-dismiss="freeUserModal">Poate mai tarziu.</button>
 				</div>
 			</div>
 		</div>
