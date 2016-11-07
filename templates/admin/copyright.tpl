@@ -1,0 +1,1 @@
+<a href="{LICENSE_LINK}" target='_blank'>{LICENSE_NAME} {LICENSE_VERSION}</a> &#169; 2005 <b>6416136 CANADA INC.</b><br> Licensed to: <a href="{COMPANY_LINK}">{COMPANY_NAME}</a>

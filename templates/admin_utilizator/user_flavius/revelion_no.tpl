@@ -1,0 +1,2 @@
+<br><h2>A-ti atins limita maxima de oferte pentru Revelion !</h2><br>
+<h4>Daca aveti nevoie sa adaugati mai multe oferte pentru Revelion va rugam adresati-va administratorului la adresa de e-mail: <u>admin@turismdevis.ro</u></h4>

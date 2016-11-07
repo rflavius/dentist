@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+ <head>
+	<script type='text/javascript' src='./jwplayer/jwplayer.js'></script>
+	<link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+  <title> testing page </title>
+  <meta name="Generator" content="EditPlus">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+	<script type="text/javascript">
+	var geocoder;
+  var map;
+
+ function initialize() 
+{
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(44.4374313, 26.094362899999965);
+    var myOptions = {
+      zoom: 17,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+
+    }
+    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	var marker = new google.maps.Marker({
+            map: map,
+            position:'44.4374313, 26.094362899999965'});
+  }
+
+  function codeAddress() 
+{
+    var address = document.getElementById("address").value;
+    geocoder.geocode( { 'address': address}, 
+		function(results, status) 
+		{
+		 if (status == google.maps.GeocoderStatus.OK) 
+			{
+			 map.setCenter(results[0].geometry.location);
+			 var marker = new google.maps.Marker({
+					 map: map,
+						 position: results[0].geometry.location
+						});
+						alert(results[0].geometry.location);
+		 } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }</script>
+ </head>
+
+ <body>
+
+
+
+
+<div id='mediaplayer'></div>
+
+<script type="text/javascript">
+  jwplayer('mediaplayer').setup({
+    'flashplayer': 'jwplayer/player.swf',
+    'id': 'playerID',
+    'width': '480',
+    'height': '270',
+    'file': 'video/barsandtone.flv',
+    'image': 'images/default.jpg',
+    'plugins': 'viral',
+    'viral.oncomplete': 'false',
+    'viral.onpause': 'false'
+  });
+</script>
+ 
+
+<body onload="initialize()">
+ <div id="map_canvas" style="width: 320px; height: 480px;"></div>
+  <div>
+    <input id="address" type="textbox" value="Str. Brezoianu 20,Bucuresti">
+    <input type="button" value="Encode" onclick="codeAddress()">
+  </div>
+</body>
+
+</html>
