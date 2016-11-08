@@ -1,59 +1,39 @@
-<script type="text/javascript" src="{SITE_BASEE}/templates/js/prototype.js"></script>
+<script src="{SITE_BASE}/resources/plugins/validator/jquery.validate.js" type="text/javascript"></script>
+<script src="{SITE_BASE}/resources/jquery/jquery_mask.min.js" type="text/javascript"></script>
 
-<script language="javascript" type="text/javascript">
-<!--
-	function CompleteLocalitateFirma()
-	{
-		var target ='localitate_ajax_addfirm'; 
-		var url="../sources/ajax_search.php?tpl_selected=addfirm&search_judet="+document.adauga_firma.judetselected.value;
-		var myAjax = new Ajax.Updater(target, url, { method: 'get'}); 
-		$(target).show(); 
-	}
+<div class='row col-sm-12'>
+	<div style='position:fixed;top:40%;left:50%;padding:15px 30px;background:white;border:2px solid #DDDDDD;border-radius:6px;z-index:100;' id='newContractLoading' class='hide'>
+		<span><img src='{SITE_BASE}/images/admin_panel/crontab_loader.gif'></span>
+		<span style='font-size:16px; color:#337AB7;padding-left:10px;line-height:31px;'>Please wait ...</span>
+	</div>
+	
+	<ul class="nav nav-tabs">
+		<li id='tab1'><a data-toggle="tab" data-div='step1' href="#step1">Detalii firma</a></li>
+		<li id='tab2'><a data-toggle="tab" data-div='step2' href="#step2">Servicii & Media</a></li>
+		<li id='tab3'><a data-toggle="tab" data-div='step3' href="#step3">Finalizare</a></li>
+	</ul>
+	
+	<div class="tab-content">
+		<div id="step1" class="tab-pane fade in active">
+			<form name='' method='post' action=''>
+				<input type='hidden' name='current_step' id='current_step' value='1'>
+				<h3>HOME</h3>
+				<p>Some content.</p>
+			</form>
+		</div>
+		<div id="step2" class="tab-pane fade">
+			<h3>Menu 1</h3>
+			<p>Some content in menu 1.</p>
+		</div>
+		<div id="step3" class="tab-pane fade">
+			<h3>Menu 2</h3>
+			<p>Some content in menu 2.</p>
+		</div>
+	</div>
+</div>
 
-
-function CountChars( field, maxcaractere )
-	{
-		if ( field.value.length > maxcaractere )
-		{
-			field.value = field.value.substr(0,maxcaractere);
-		}
-		
-		document.forms['adauga_firma']['caractere_'+field.name].value = maxcaractere - field.value.length;
-	}
-
-
-
-function loadform()
-{
-	var target ='form_place'; 
-	var url="../sources/ajax_plata.php?plata="+document.adauga_firma.type.value;
-	var myAjax = new Ajax.Updater(target, url, { method: 'get'}); 
-		$(target).show(); 
-}
-
-function ViewAbonamentDiv(type)
-{
-	if(type=='1')
-	{
-		// gratuit
-		document.getElementById('view_abonament').style.display = 'none';
-		document.getElementById('cost_promovare').innerHTML = '0';
-	}
-	else
-	{
-		// abonament
-		document.getElementById('view_abonament').style.display = 'block';
-		document.getElementById('cost_promovare').innerHTML = '200';
-	}
-}
-
-
-//-->
-</script>
-
-{ERROR_MSG}
 <br>
-<div class="steps">
+<div class="steps clearfix">
 	<span class="step1_active"></span>
 	<span class="step2_inactive"></span>
 	<span class="step3_inactive"></span>

@@ -11,10 +11,7 @@
 	+---------------------------------------------------------------------------------------------*/
 
 //echo 'Pagina este in lucru. Va rugam reveniti, multumim';exit;
-// define application path
-define('APPLICATION_PATH', realpath(dirname(__FILE__)));
-
-require(APPLICATION_PATH.'/preload.php');
+require('preload.php');
 
 #Create OLD database object
 $db = api_db_connect();

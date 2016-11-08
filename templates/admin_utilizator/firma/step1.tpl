@@ -1,131 +1,27 @@
-<script type="text/javascript" src="{SITE_BASEE}/templates/js/prototype.js"></script>
-
-<script type="text/javascript">
-<!--
-
-var map;
-var geocoder;
-var marker;
-
-function codeAddress()
-{
-	var address = document.getElementById('address').value;
-	geocoder.geocode( { 'address': address}, function(results, status)
-	{
-		if(status == google.maps.GeocoderStatus.OK)
-		{
-			map.setCenter(results[0].geometry.location);
-			map.setZoom(16);
-			//clear all the previous markers
-			marker.setMap(null);
-			//add the new marker for this location
-			marker = new google.maps.Marker({
-													map: map,
-													position: results[0].geometry.location,
-													draggable:true
-												});
-			
-			var point = marker.getPosition();
-			document.getElementById('lat').value = point.lat().toFixed(5);
-			document.getElementById('lng').value = point.lng().toFixed(5);
-
-			
-			google.maps.event.addListener (marker, 'dragend', function (event) 
-			{
-				
-				// Pan to this position
-				var point = marker.getPosition();
-				
-				map.panTo(point);
-				document.getElementById('lat').value = point.lat().toFixed(5);
-				document.getElementById('lng').value = point.lng().toFixed(5);
-			});
-		}
-		else
-		{
-			alert('Ne pare rau dar nu am gasit locatia dvs: ' + status);
-		}
-	});
-}
-
-function initialize()
-{
-	geocoder = new google.maps.Geocoder();
-	var mapOptions = {
-						zoom: 8,
-						center: new google.maps.LatLng(45.629149, 25.639343),
-						mapTypeId: google.maps.MapTypeId.ROADMAP
-					}
-	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-	marker = new google.maps.Marker();
-}
-
-function loadScript() 
-{
-	var script = document.createElement("script");
-	script.type = "text/javascript";
-	script.src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyAIDzm8u_2tDqVML6fpkCmi20ZvkuLi-Rk&sensor=false&callback=initialize";
-	document.body.appendChild(script);
-}
-
-window.onload = loadScript;
-
-
-
-
-
-
+<div class='row col-sm-12'>
+	<ul class="nav nav-tabs">
+		<li class="active"><a data-toggle="tab" href="#step1">Detalii firma</a></li>
+		<li><a data-toggle="tab" href="#step2">Servicii & Media</a></li>
+		<li><a data-toggle="tab" href="#step3">Finalizare</a></li>
+	</ul>
 	
-	
-
-function CompleteLocalitateFirma()
-{
-	var target ='localitate_ajax_addfirm'; 
-	var url="../sources/ajax_search.php?tpl_selected=addfirm&search_judet="+document.adauga_firma.judetselected.value;
-	var myAjax = new Ajax.Updater(target, url, { method: 'get'}); 
-	$(target).show(); 
-}
-
-
-function CountChars( field, maxcaractere )
-	{
-		if ( field.value.length > maxcaractere )
-		{
-			field.value = field.value.substr(0,maxcaractere);
-		}
-		
-		document.forms['adauga_firma']['caractere_'+field.name].value = maxcaractere - field.value.length;
-	}
+	<div class="tab-content">
+		<div id="step1" class="tab-pane fade in active">
+			<h3>HOME</h3>
+			<p>Some content.</p>
+		</div>
+		<div id="step2" class="tab-pane fade">
+			<h3>Menu 1</h3>
+			<p>Some content in menu 1.</p>
+		</div>
+		<div id="step3" class="tab-pane fade">
+			<h3>Menu 2</h3>
+			<p>Some content in menu 2.</p>
+		</div>
+	</div>
+</div>
 
 
-
-function loadform()
-{
-	var target ='form_place'; 
-	var url="../sources/ajax_plata.php?plata="+document.adauga_firma.type.value;
-	var myAjax = new Ajax.Updater(target, url, { method: 'get'}); 
-		$(target).show(); 
-}
-
-function ViewAbonamentDiv(type)
-{
-	if(type=='1')
-	{
-		// gratuit
-		document.getElementById('view_abonament').style.display = 'none';
-		document.getElementById('cost_promovare').innerHTML = '0';
-	}
-	else
-	{
-		// abonament
-		document.getElementById('view_abonament').style.display = 'block';
-		document.getElementById('cost_promovare').innerHTML = '200';
-	}
-}
-
-
-//-->
-</script>
 
 <div class="steps">
 	<span class="step1_active"></span>

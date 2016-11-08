@@ -44,6 +44,8 @@ class Dentist_Init
 		$settings = Dentist_Settings::getSettings();
 		$registry->settings = $settings;
 		
+		define('SITE_BASE', $registry->configuration->website->params->url);
+		define('SSL_SITE_BASE', str_replace("http:","https:",$registry->configuration->website->params->url));
 	}
 	
 	/**

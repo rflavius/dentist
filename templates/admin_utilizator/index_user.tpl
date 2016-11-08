@@ -19,9 +19,13 @@
 	
 	<!-- Latest compiled JavaScript -->
 	<script src="{SITE_BASE}/resources/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-		
-	<script type="text/javascript" src="{SITE_BASEE}/templates/js/functions.js"></script>
-	<script type="text/javascript" src="../templates/js/mini/overlib_mini.js">
+	
+	<!-- Font-Awesome CSS -->
+	<link rel="StyleSheet" href="{SITE_BASE}/resources/font-awesome/css/font-awesome.css" rel="stylesheet">
+	
+	<script type="text/javascript" src="{SITE_BASE}/templates/js/functions.js"></script>
+	<script src="{SITE_BASE}/templates/js/admin_utilizator/general.js" type="text/javascript"></script>
+	<script type="text/javascript" src="{SITE_BASE}/templates/js/mini/overlib_mini.js">
 	<!-- overLIB (c) Erik Bosrup --></script>
 	
 	<script type="text/javascript">

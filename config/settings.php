@@ -27,8 +27,6 @@
 	define('LICENSE_VERSION', 'v0.9');
 #File Extension
 	define('FILE_EXTENSION', '.html');
-	define('SITE_BASE', 'http://www.dentistonline.ro');
-	define('SSL_SITE_BASE', 'https://www.dentistonline.ro');
 	
 	
 	
