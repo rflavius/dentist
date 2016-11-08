@@ -192,7 +192,57 @@ switch($_GET['type'])
 			break;
 			
 			case '3':
+				$pachete = new Pachete_Servicii();
 				$tpl->set_file('tpl_ajax', 'ajax/new-add/step3.tpl');
+				// list pachete
+				$tpl->set_block('tpl_ajax', 'list_pachete', 'list_pachete2');
+				$pk = $pachete->listPacheteFrontend('Y');
+				
+				$default_pk = $pachete->defaultPachetID();
+				//if(empty($default_pk)) 
+				
+				if(count($pk)>0)
+				{
+					foreach ($pk as $key => $value)
+					{
+						if($value['default_view']=='Y') $tpl->set_var('PACHET_SELL', 'checked');
+						$tpl->set_var('PACHET', strtoupper($value['name']));
+						$tpl->set_var('PACHET_PRICE', $value['pret']);
+						$tpl->set_var('PACHET_ID', $value['id']);
+						$tpl->set_var('PACHET_DESCR', $value['description']);
+						$tpl->set_var('PACHET_HASHTAG', str_replace(" ","_",strtolower($value['name'])));
+				
+						if(!empty($value['discount']))
+						{
+							switch ($value['discount_type'])
+							{
+								case 'month':
+									$tpl->set_var('PACHET_OFERTA', '<p class="text-danger">DISCOUNT: '.$value['discount'].' din pretul final</p>');
+								break;
+				
+								case 'percent':
+									$tpl->set_var('PACHET_OFERTA', '<p class="text-danger">DISCOUNT: '.$value['discount'].'% din pretul final</p>');
+								break;
+							}
+						}
+						else $tpl->set_var('PACHET_OFERTA', "");
+						$tpl->parse('list_pachete2', 'list_pachete', true);
+					}
+				}
+				else $tpl->parse('list_pachete2', '');
+				
+				## parse perioada contractului
+				$tpl->set_block('tpl_ajax','list_perioada','list_perioada2');
+				for ($i = 6; $i <= 24; $i++)
+				{
+					if($i==6) $tpl->set_var('PERIOADA_SELL', 'selected');
+					else $tpl->set_var('PERIOADA_SELL', '');
+					$tpl->set_var('PERIOADA_VALUE', $i.' luni');
+					$tpl->set_var('PERIOADA', $i);
+					$tpl->parse('list_perioada2','list_perioada',true);
+				}
+				
+				
 				$tpl->pparse('MAIN','tpl_ajax');
 			break;
 		}

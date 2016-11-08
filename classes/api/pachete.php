@@ -19,7 +19,6 @@ class Pachete_Servicii
 	 */
 	public function listPacheteFrontend($frontend = false)
 	{
-		
 		$select = $this->dbPDO->select()
 								->from('pachete')
 								->where('active = ?', 'Y')
@@ -53,6 +52,7 @@ class Pachete_Servicii
 		}
 		return $info;
 	}
+	
 	/*
 	 * list servicii from DB
 	 */
@@ -75,6 +75,7 @@ class Pachete_Servicii
 		}
 		return $info;
 	}
+	
 	/*
 	 * list servicii from DB
 	*/
@@ -98,6 +99,7 @@ class Pachete_Servicii
 		}
 		return $info;
 	}
+	
 	/*
 	 * list servicii care sunt contra cost
 	 */
@@ -121,6 +123,7 @@ class Pachete_Servicii
 		}
 		return $info;
 	}
+	
 	/*
 	 * here we get all servicii for the selected pk
 	 */
@@ -146,6 +149,7 @@ class Pachete_Servicii
 		}
 		return $info;
 	}
+	
 	/*
 	 * this is used for the details page
 	 * and here we check if a service is in the customer package
@@ -162,6 +166,7 @@ class Pachete_Servicii
 		}
 		return $found;
 	}
+	
 	/*
 	 * here we get serviciu info
 	 */
@@ -179,6 +184,7 @@ class Pachete_Servicii
 		$info['position'] = $this->db->f('position');
 		return $info;
 	}
+	
 	/*
 	 * update the pachet status
 	 */
@@ -187,6 +193,7 @@ class Pachete_Servicii
 		$query = "UPDATE `pachete` SET `active` = '".$st."' WHERE `id` = '".$id."'";
 		$this->db->query($query);
 	}
+	
 	/*
 	 * update the serviciu status
 	*/
@@ -195,6 +202,7 @@ class Pachete_Servicii
 		$query = "UPDATE `servicii` SET `active` = '".$st."' WHERE `id` = '".$id."'";
 		$this->db->query($query);
 	}
+	
 	/*
 	 * remove selected pachet
 	 */
@@ -203,6 +211,7 @@ class Pachete_Servicii
 		$sql = "DELETE FROM pachete WHERE `id`='$id'";
 		$this->db->query($sql);
 	}
+	
 	/*
 	 * remove selected serviciu
 	 */
@@ -263,6 +272,7 @@ class Pachete_Servicii
 		$sql = "UPDATE pachete SET `name`='".addslashes($_POST['name'])."', `pret`='".$_POST['pret']."', `servicii`='$serv_sql', `luni` = '".$_POST['luni']."' WHERE `id`='$id'";
 		$this->db->query($sql);
 	}
+	
 	/*
 	 * here we make the edit upon serviciu level
 	*/
@@ -276,6 +286,7 @@ class Pachete_Servicii
 							WHERE `id`='$id'";
 		$this->db->query($sql);
 	}
+	
 	/*
 	 * add new pachet
 	 */
@@ -295,6 +306,7 @@ class Pachete_Servicii
 		$sql = "INSERT INTO pachete(`name`, `pret`, `servicii`,`luni`) VALUES ('".addslashes($_POST['name'])."', '".$_POST['pret']."', '".$serv_sql."','".$_POST['luni']."')";
 		$this->db->query($sql);
 	}
+	
 	/*
 	 * add new serviciu
 	*/
@@ -307,6 +319,7 @@ class Pachete_Servicii
 									'".$_POST['value']."')";
 		$this->db->query($sql);
 	}
+	
 	/*
 	 * return servicii for pachet in array object
 	 */
@@ -323,6 +336,7 @@ class Pachete_Servicii
 		}
 		return $serv;
 	}
+	
 	/*
 	 * here we insert the coords into DB
 	 */
@@ -331,6 +345,7 @@ class Pachete_Servicii
 		$sql = "INSERT INTO cabinete_coord(`cabinet_id`, `lat`, `lng`, `judet`, `localitate`) VALUES ('$id','".$_POST['lat']."','".$_POST['lng']."','".$_POST['judet']."','".$_POST['nume_loc_sector']."')";
 		$this->db->query($sql);
 	}
+	
 	/*
 	 * check if he has free package
 	 */
@@ -347,11 +362,13 @@ class Pachete_Servicii
 			return false;
 		}
 	}
+	
 	public function addPachetAndServicii($uid,$cid)
 	{
 		$sql = "INSERT INTO users_pachete(`user_id`, `cabinet_id`, `pachet`, `servicii`, `pret`) VALUES ('$uid','$cid','".$_POST['pachet']."','".$_POST['servicii']."','".$_POST['total']."')";
 		$this->db->query($sql);
 	}
+	
 	/*
 	 * update/change/edit pachet for a selected cabinet
 	 */
@@ -360,6 +377,7 @@ class Pachete_Servicii
 		$sql = "UPDATE users_pachete SET `pachet`='".$post['firma_pachet']."', `servicii`='".$post['firma_servicii']."', `pret`='".$post['total']."' WHERE `cabinet_id`='".$post['cabinet_id']."'";
 		$this->db->query($sql);
 	}
+	
 	/*
 	 * add pachet si servicii for old client
 	 */
@@ -369,6 +387,7 @@ class Pachete_Servicii
 							VALUES('".$post['user_id']."', '".$post['cabinet_id']."', '".$post['firma_pachet']."', '".$post['firma_servicii']."','".$post['total']."','Y',NOW(),'')";
 		$this->db->query($sql);
 	}
+	
 	/*
 	 * 
 	 */
@@ -379,6 +398,7 @@ class Pachete_Servicii
 		$sql = "UPDATE users_pachete SET `pachet`='".$get_info_proforma['tip_promovare']."', `servicii`='".$get_info_proforma['servicii_promovare']."', `pret`='".$get_info_proforma['cost']."' WHERE `cabinet_id`='".$get_info_proforma['firma_id']."'";
 		$this->db->query($sql);
 	}
+	
 	/*
 	 * 
 	 */
@@ -399,6 +419,7 @@ class Pachete_Servicii
 							 		'$end')";
 		$this->db->query($sql);
 	}
+	
 	/*
 	 * 
 	 */
@@ -409,6 +430,7 @@ class Pachete_Servicii
 		$this->db->next_record();
 		return $this->db->f('id');
 	}
+	
 	/*
 	 * 
 	 */
@@ -429,10 +451,10 @@ class Pachete_Servicii
 		}
 		return $info;
 	}
+	
 	/*
 	 * this we use in list articels and anunturi to see witch user still pays and who's free
 	 */
-
 	public function getTipPromovareByUser($user_id)
 	{
 		$info = '';
@@ -466,6 +488,7 @@ class Pachete_Servicii
 		}
 		return $info;
 	}
+	
 	/*
 	 * check if it has recomandat in his package
 	 */

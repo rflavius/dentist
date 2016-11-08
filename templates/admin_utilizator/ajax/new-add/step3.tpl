@@ -64,7 +64,9 @@
 					<h3 class="panel-title">Rezumat promovare</h3>
 				</div>
 				<div class="panel-body">
-					<p> ... order summary refreshed using ajax request</p>
+					<div id='summary_div'>
+						<p>{SUMMARY}</p>
+					</div>
 				</div>
 				<div class="panel-footer">
 					<p>Alegeti o promovare avantajoasa oferita de cel mai bun portal stomatologic din Romania.</p>
