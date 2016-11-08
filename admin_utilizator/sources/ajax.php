@@ -199,13 +199,13 @@ switch($_GET['type'])
 				$pk = $pachete->listPacheteFrontend('Y');
 				
 				$default_pk = $pachete->defaultPachetID();
-				//if(empty($default_pk)) 
+				if(empty($default_pk)) $default_pk = $pachete->getFreePackageID();
 				
 				if(count($pk)>0)
 				{
 					foreach ($pk as $key => $value)
 					{
-						if($value['default_view']=='Y') $tpl->set_var('PACHET_SELL', 'checked');
+						if($default_pk == $value['id']) $tpl->set_var('PACHET_SELL', 'checked');
 						$tpl->set_var('PACHET', strtoupper($value['name']));
 						$tpl->set_var('PACHET_PRICE', $value['pret']);
 						$tpl->set_var('PACHET_ID', $value['id']);
@@ -233,6 +233,7 @@ switch($_GET['type'])
 				
 				## parse perioada contractului
 				$tpl->set_block('tpl_ajax','list_perioada','list_perioada2');
+				$def_perioada = 6;
 				for ($i = 6; $i <= 24; $i++)
 				{
 					if($i==6) $tpl->set_var('PERIOADA_SELL', 'selected');
@@ -242,6 +243,26 @@ switch($_GET['type'])
 					$tpl->parse('list_perioada2','list_perioada',true);
 				}
 				
+				// default summary
+				$pkInfo = $pachete->getPachetInfo($default_pk);
+				$tpl->set_var("PACHET_NUME", $pkInfo['name']);
+				$tpl->set_var("PACHET_PERIOADA", $def_perioada.' luni');
+				$tpl->set_var("PACHET_PRET", $pkInfo['pret'].' RON/luna');
+				$total = $pkInfo['pret'] * $def_perioada;
+				if(!empty($pkInfo['pret']) && !empty($pkInfo['discount']))
+				{
+					if($pkInfo['discount_type']=='month')
+					{
+						$tpl->set_var("PACHET_DISCOUNT", '<h4 class="text-danger">Reducere '.$pkInfo['discount'].'luni din pretul final.</h4>');
+						$total = $total - ($pkInfo['pret'] * $pkInfo['discount']);
+					}
+					else
+					{
+						$tpl->set_var("PACHET_DISCOUNT", '<h4 class="text-danger">Reducere '.$pkInfo['discount'].'% din pretul final.</h4>');
+						$total = $total - ($total*$pkInfo['discount']/100);
+					}
+				}
+				$tpl->set_var("TOTAL", $total.'RON');
 				
 				$tpl->pparse('MAIN','tpl_ajax');
 			break;

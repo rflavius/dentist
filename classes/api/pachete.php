@@ -526,6 +526,21 @@ class Pachete_Servicii
 	}
 	
 	/**
+	 * get pachet gratuit ID
+	 * @access public
+	 * @param none
+	 * @return int
+	 */
+	public function getFreePackageID()
+	{
+		$select = $this->dbPDO->select()
+								->from('pachete', 'id')
+								->where('frontend = ?', 'Y')
+								->where('price = ?', '0');
+		return $this->dbPDO->fetchOne($select);
+	}
+	
+	/**
 	 * get package ID for details view
 	 * @access public
 	 * @param int $id

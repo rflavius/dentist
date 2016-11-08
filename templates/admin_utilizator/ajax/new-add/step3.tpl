@@ -6,25 +6,29 @@
 	<div class='form-group'>
 		<div class='col-sm-12'>
 			<!-- BEGIN list_pachete -->
-			<div class="panel panel-default col-sm-3">
-				<div class="panel-heading">
-					<h3 class="panel-title">{PACHET}</h3>
-				</div>
-				<div class="panel-body">
-					<p>{PACHET_DESCR}</p>
-					<p>{PACHET_PRICE} RON/luna<br><input type="radio" name="level" value="{PACHET_ID}" onClick="AddAjaxAbonamentCost(this.value,'')" {PACHET_SELL}></p>
-					<p>{PACHET_OFERTA}<a href="{SITE_BASE}/admin_utilizator/?page=user.publicitate#{PACHET_HASHTAG}" target="_blank">[ Detalii pachet ]</a></p>
+			<div class='col-sm-3'>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">{PACHET}</h3>
+					</div>
+					<div class="panel-body text-center">
+						<p>{PACHET_DESCR}</p>
+						<p>{PACHET_PRICE} RON/luna<br><input type="radio" name="level" value="{PACHET_ID}" onClick="AddAjaxAbonamentCost(this.value,'')" {PACHET_SELL}></p>
+						<p>{PACHET_OFERTA}<a href="{SITE_BASE}/admin_utilizator/?page=user.publicitate#{PACHET_HASHTAG}" target="_blank">[ Detalii pachet ]</a></p>
+					</div>
 				</div>
 			</div>
 			<!-- END list_pachete -->
-			<div class="panel panel-default col-sm-3">
-				<div class="panel-heading">
-					<h3 class="panel-title">Promovare BANNER</h3>
-				</div>
-				<div class="panel-body">
-					<p>...</p>
-					<p>Pentru detalii ne puteti contacta prin email la: admin@dentistonline.ro, sau telefonic la: 0727.380.368 .</p>
-					<p><a href="{SITE_BASE}/admin_utilizator/?page=user.publicitate#bannere" target="_blank">[ Detalii pachet ]</a></p>
+			<div class='col-sm-3'>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Promovare BANNER</h3>
+					</div>
+					<div class="panel-body text-center">
+						<p>...</p>
+						<p>Pentru detalii ne puteti contacta prin email la: admin@dentistonline.ro, sau telefonic la: 0727.380.368 .</p>
+						<p><a href="{SITE_BASE}/admin_utilizator/?page=user.publicitate#bannere" target="_blank">[ Detalii pachet ]</a></p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -41,6 +45,7 @@
 			</select>
 		</div>
 	</div>
+	<div class='clearfix'>&nbsp;</div>
 	<div class='clearfix'>&nbsp;</div>
 	<div class='form-group'>
 		<div class='col-sm-6'>
@@ -65,7 +70,30 @@
 				</div>
 				<div class="panel-body">
 					<div id='summary_div'>
-						<p>{SUMMARY}</p>
+						<table class='table' width='100%'>
+							<thead>
+							<tr>
+								<th>#</th>
+								<th>Pachet Promovare</th>
+								<th>Perioada</th>
+								<th>Pret</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>1.</td>
+								<td>{PACHET_NUME}</td>
+								<td>{PACHET_PERIOADA}</td>
+								<td>{PACHET_PRET}</td>
+							</tr>
+							<tr>
+								<td colspan='4' align='right'>
+									{PACHET_DISCOUNT}
+									<h3  class="text-primary">TOTAL: {TOTAL}</h3>
+								</td>
+							</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				<div class="panel-footer">
