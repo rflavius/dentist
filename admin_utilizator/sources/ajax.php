@@ -1,5 +1,6 @@
 <?php
 
+require(realpath(dirname(dirname(dirname(__FILE__)))).'/preload.php');
 
 switch($_GET['type'])
 {
@@ -138,7 +139,7 @@ switch($_GET['type'])
 	break;
 	
 	case 'free_user_modal':
-		require_once('../../preload.php');
+		
 		$tpl = new Template(APPLICATION_PATH.'/templates/admin_utilizator/');
 		$get_firme = GetFirme($_SESSION['userinfo']->id,"-1");
 		if(count($get_firme)>0)
@@ -159,6 +160,41 @@ switch($_GET['type'])
 				}
 				else $tpl->set_var('AJAX_RESPONSE','');
 			}
+		}
+	break;
+	
+	case 'list-cities':
+		$tpl = new Template(APPLICATION_PATH.'/templates/admin_utilizator/');
+		$tpl->set_file('tpl_ajax', 'ajax/list-cities.tpl');
+		$tpl->set_block('tpl_ajax','list_cities','list_cities2');
+		$cod_judet = $_GET['judet'];
+		$get_dentist_localitati = GetLocalitati($cod_judet);
+		foreach($get_dentist_localitati as $ky => $val)
+		{
+			$tpl->set_var('CITY_CODE',$val['id'] );
+			$tpl->set_var('CITY',$val['name'] );
+			$tpl->parse('list_cities2', 'list_cities', true);
+		}
+		$tpl->pparse('MAIN','tpl_ajax');
+	break;
+	
+	case 'new-add':
+		$tpl = new Template(APPLICATION_PATH.'/templates/admin_utilizator/');
+		switch($_GET['step'])
+		{
+			case '1':
+				echo '1';
+			break;
+			
+			case '2':
+				$tpl->set_file('tpl_ajax', 'ajax/new-add/step2.tpl');
+				$tpl->pparse('MAIN','tpl_ajax');
+			break;
+			
+			case '3':
+				$tpl->set_file('tpl_ajax', 'ajax/new-add/step3.tpl');
+				$tpl->pparse('MAIN','tpl_ajax');
+			break;
 		}
 	break;
 }

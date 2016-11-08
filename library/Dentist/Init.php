@@ -35,11 +35,10 @@ class Dentist_Init
 		$registry->configuration = $config;
 		//print_r($config);exit;
 		$t = new Template(TEMPLATES_PATH);
-
-		// here we will start the new class based on PDO
-		$new_db = new Zend_Db_Adapter_Pdo_Mysql($config->database->params->toArray());
-		$registry->database = $new_db;
 		
+		// here we will start the new class based on PDO
+		$new_db = new Dentist_PDODb($config->database->params->toArray());
+		$registry->database = $new_db;
 		//Load specific configuration settings from database, and store it in registry
 		$settings = Dentist_Settings::getSettings();
 		$registry->settings = $settings;

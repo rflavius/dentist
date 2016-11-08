@@ -123,11 +123,11 @@
 	</tr>
 	<tr> 
       <td class="row1">Echipa medicala</td>
-      <td class="row1"><textarea name="echipa_medicala" rows="8" cols="40" >{ECHIPA_MEDICALA}</textarea><br /></td>
+      <td class="row1"><br /></td>
    </tr>
 	<tr> 
       <td class="row1">Orar <span>*</span></td>
-      <td class="row1"><textarea name="orar" rows="8" cols="40" >{ORAR}</textarea><br /></td>
+      <td class="row1"><br /></td>
 	</tr>
 	<tr> 
       <td class="row1">Descriere  <span>*</span></td>
@@ -144,13 +144,6 @@
 	<tr> 
       <td class="row1">Galerie Imagini </td>
       <td class="row1" style="padding-top: 10px;">
-				<div id="Thumbs" class="thumbList"><!-- BEGIN if_images --> <img src="{THUMBNAIL}"> <!-- END if_images --></div>
-				<div id="uploader" class="uploadBtn" style="cursor:pointer;"></div>
-				<form id="FileUploaderForm_0" enctype="multipart/form-data">
-					<input type="hidden" name="firma_id" id="firma_id" value="{FIRMA_ID}">
-					<input class="dijitFileInputReal" type="file" name="uploadedfile">
-				</form>
-				<div id="loading_dojoUpload">Va rugam asteptati ...</div>
 			</td>
 	</tr>
 

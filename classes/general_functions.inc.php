@@ -2187,13 +2187,17 @@ function CheckLink($test_link)
 					
 				}
 		}
-
 		return $info;
-
 }
+
+/**
+ * add visitor IP record into DB
+ * @param string $v_ip
+ * @return void
+ */
 function AddVisitorIP ($v_ip)
 {
-	global $db;
+	$db = Zend_Registry::get('database');
 	if(!isset($_COOKIE['visitors']) || $_COOKIE['visitors']=='')
 	{
 		## set the cookie for 180 days
@@ -2201,24 +2205,19 @@ function AddVisitorIP ($v_ip)
 		$new = false;
 		$browser = GetUserAgent();
 		$refferer = GetReferer();
-		$sql = "SELECT * FROM visitors WHERE IP='".$v_ip."'";
-		$db->query($sql);
-		if($db->num_rows()>0)
-		{
-			$new = false;
-		}
-		else
-		{
-			$new = true;
-		}
+		$select = $db->select()
+						->from('visitors')
+						->where('IP = ?', $v_ip);
+		$results = $db->fetchAll($select);
+		if(count($results)>0) $new = false;
+ 		else $new = true;
 
 		# unique IP
 		if($new)
 		{
-			$sql1 = "INSERT INTO visitors(`id`,`IP`,`browser`,`refferer`,`date`) VALUES ('','".$v_ip."','".$browser."','".$refferer."',NOW())";
-			$db->query($sql1);
+			$data = array('IP' => $v_ip, 'browser' => $browser, 'refferer' => $refferer, 'date' => new Zend_Db_Expr('NOW()'));
+			$db->insert('visitors', $data);
 		}
-
 	}
 }
 

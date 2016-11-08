@@ -18,8 +18,9 @@ require('../classes/admin_utilizator/functions.php');
 
 if(!isset($_SESSION['userinfo']->username))
 {
-	$_SESSION['login_error'] = 'Login incorect.Va rugam incercati din nou!';
-	header('location: http://www.dentistonline.ro');
+	$_SESSION['error']['type'] = 'warning';
+	$_SESSION['error']['message'] = 'Login incorect.Va rugam incercati din nou!';
+	header('location: '.SITE_BASE);
 	exit;
 }
 
@@ -55,7 +56,7 @@ $current_page_id = GetCurrentMenuItem($the_module, $action);
 $current_parent_id = GetCurrentMenuIDUtilizator($the_module, $action);
 
 $tpl->set_file("tpl_index", "index_user.tpl");
-$tpl->set_var("SITETITLE", $conf->site_name." Panou de administartor");
+$tpl->set_var("SITETITLE", $conf->site_name." Panou de administrare");
 $tpl->set_var('FILE_EXTENSION', FILE_EXTENSION);
 $tpl->set_var('SITE_BASE', SITE_BASE);
 $tpl->set_var("USERNAME", $admin_utilizator->username);

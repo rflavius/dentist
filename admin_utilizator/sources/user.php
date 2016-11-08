@@ -30,8 +30,6 @@ switch ($action)
 		$tpl->set_file("tpl_firm", "user/adauga_firma.tpl");
 		$tpl->set_block('tpl_firm', 'display_cats', 'display_catss');
 		$tpl->set_block('tpl_firm', 'judet', 'judett');
-		$tpl->set_block('tpl_firm', 'ADD_FIRM_BLOCK', 'ADD_FIRM_BLOCKK');
-		$tpl->set_block('tpl_firm', 'fara_cabinet', 'fara_cabinet_block');
 		$tpl->set_var('LOC_DIV_ADAUGAFIRMA',"Alegeti judetul intai!" );
 		$tpl->set_var('MAX_PICTURE_WIDTH',$conf->max_img_cabinete);
 		$tpl->set_var('DETALIIADAUGAFIRMA','?page=user.detaliiadaugafirma');
@@ -139,7 +137,6 @@ switch ($action)
 			unset($_SESSION['submit_firma']);
 		}
 		$tpl->set_var('INSERT_FIRMA',"?page=user.insertfirma");
-		$tpl->parse('ADD_FIRM_BLOCKK', 'ADD_FIRM_BLOCK', true);
 		
 		$tpl->parse("MAIN", "tpl_firm");
 	break;
