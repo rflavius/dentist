@@ -128,3 +128,42 @@ function nextStep(step, refresh = true)
 		});
 	}
 }
+
+/**
+ * here we recalculate the contract price based on what he selects
+ */
+function AddAjaxAbonamentCost(pachet, months)
+{
+	if(pachet=="") pachet = jQuery("#orderForm #pachetContract").val();
+	if(months=="") months = jQuery("#orderForm #perioadaContract").val();
+	jQuery('#newContractLoading').removeClass('hide').addClass('show');
+	jQuery.ajax({
+		type: "GET",
+		url: "../admin_utilizator/sources/ajax.php",
+		data: {type: 'new-add', step: 'recalculate', 'pachet': pachet, 'perioada': months}
+	})
+	.done(function(html)
+	{
+		jQuery('#summary_div').html(html);
+		jQuery('#newContractLoading').removeClass('show').addClass('hide');
+	});
+}
+
+function showFacturare(type)
+{
+	if(type != "")
+	{
+		jQuery('#newContractLoading').removeClass('hide').addClass('show');
+		jQuery.ajax({
+			type: "GET",
+			url: "../admin_utilizator/sources/ajax.php",
+			data: {type: 'new-add', step: 'facturare', 'tip': type}
+		})
+		.done(function(html)
+		{
+			jQuery('#facturare_block').html(html);
+			jQuery('#newContractLoading').removeClass('show').addClass('hide');
+		});
+	}
+	else jQuery('#facturare_block').html();
+}

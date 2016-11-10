@@ -13,7 +13,7 @@
 					</div>
 					<div class="panel-body text-center">
 						<p>{PACHET_DESCR}</p>
-						<p>{PACHET_PRICE} RON/luna<br><input type="radio" name="level" value="{PACHET_ID}" onClick="AddAjaxAbonamentCost(this.value,'')" {PACHET_SELL}></p>
+						<p>{PACHET_PRICE} RON/luna<br></p>
 						<p>{PACHET_OFERTA}<a href="{SITE_BASE}/admin_utilizator/?page=user.publicitate#{PACHET_HASHTAG}" target="_blank">[ Detalii pachet ]</a></p>
 					</div>
 				</div>
@@ -35,10 +35,17 @@
 	</div>
 	<div class='clearfix'>&nbsp;</div>
 	<div class='form-group'>
-		<div class='col-sm-5'>
-			<label>Perioada promovarii</label>
-			<select name="perioada" id='perioadaPachet' onChange='AddAjaxAbonamentCost("", this.value)' class='form-control' >
-				<option value=""> - - - - - - - - - - </option>
+		<div class='col-sm-6'>
+			<label>Tip promovare *</label>
+			<select id='pachetContract' name="pachet" onChange='AddAjaxAbonamentCost(this.value, "")' class='form-control'>
+				<!-- BEGIN list_packages -->
+				<option value="{PACKAGE_ID}" {PACKAGE_SELL}>{PACKAGE} - {PACKAGE_PRICE} RON/luna</option>
+				<!-- END list_packages -->
+			</select>
+		</div>
+		<div class='col-sm-6'>
+			<label>Perioada promovarii *</label>
+			<select id='perioadaContract' name="perioada" onChange='AddAjaxAbonamentCost("", this.value)' class='form-control' >
 				<!-- BEGIN list_perioada -->
 				<option value="{PERIOADA}" {PERIOADA_SELL}>{PERIOADA_VALUE}</option>
 				<!-- END list_perioada -->
@@ -50,7 +57,7 @@
 	<div class='form-group'>
 		<div class='col-sm-6'>
 			<label>Date facturare</label>
-			<select name="type" onchange="loadform(this.value);" class='form-control'>
+			<select name="type" onchange="showFacturare(this.value);" class='form-control'>
 				<option value="" selected>Fara factura</option>
 				<option value="persoana_fizica" >Persoana fizica</option>
 				<option value="firma" >Firma</option>

@@ -6,18 +6,18 @@
 	<div class='form-group'>
 		<div class='col-sm-12'>
 			<label>Descriere *</label>
-			<textarea name="descriere"  rows="8" class='form-control' required>{DESCRIERE}</textarea>
+			<textarea name="descriere"  rows="8" class='form-control' required placeHolder="Descrierea unitatii dvs ...">{DESCRIERE}</textarea>
 		</div>
 	</div>
 	<div class='clearfix'>&nbsp;</div>
 	<div class='form-group'>
 		<div class='col-sm-6'>
 			<label>Echipa medicala</label>
-			<textarea name="echipa_medicala" rows="8" class='form-control' >{ECHIPA_MEDICALA}</textarea>
+			<textarea name="echipa_medicala" rows="8" class='form-control'  placeHolder="Echipa medicala ...">{ECHIPA_MEDICALA}</textarea>
 		</div>
 		<div class='col-sm-6'>
 			<label>Orar *</label>
-			<textarea name="orar" rows="8" class='form-control' required>{ORAR}</textarea>
+			<textarea name="orar" rows="8" class='form-control' required placeHolder="Introduceti orarul de functionare ...">{ORAR}</textarea>
 		</div>
 	</div>
 	<div class='clearfix'>&nbsp;</div>

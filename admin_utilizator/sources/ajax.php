@@ -180,6 +180,7 @@ switch($_GET['type'])
 	
 	case 'new-add':
 		$tpl = new Template(APPLICATION_PATH.'/templates/admin_utilizator/');
+		$pachete = new Pachete_Servicii();
 		switch($_GET['step'])
 		{
 			case '1':
@@ -192,17 +193,18 @@ switch($_GET['type'])
 			break;
 			
 			case '3':
-				$pachete = new Pachete_Servicii();
+				
 				$tpl->set_file('tpl_ajax', 'ajax/new-add/step3.tpl');
 				// list pachete
 				$tpl->set_block('tpl_ajax', 'list_pachete', 'list_pachete2');
+				$tpl->set_block('tpl_ajax', 'list_packages', 'list_packages2');
 				$pk = $pachete->listPacheteFrontend('Y');
-				
 				$default_pk = $pachete->defaultPachetID();
 				if(empty($default_pk)) $default_pk = $pachete->getFreePackageID();
 				
 				if(count($pk)>0)
 				{
+					// display the info boxes for each package
 					foreach ($pk as $key => $value)
 					{
 						if($default_pk == $value['id']) $tpl->set_var('PACHET_SELL', 'checked');
@@ -228,8 +230,22 @@ switch($_GET['type'])
 						else $tpl->set_var('PACHET_OFERTA', "");
 						$tpl->parse('list_pachete2', 'list_pachete', true);
 					}
+					// display the select dropdown for the package to select
+					foreach ($pk as $key => $value)
+					{
+						if($default_pk == $value['id']) $tpl->set_var('PACKAGE_SELL', 'selected');
+						else $tpl->set_var('PACKAGE_SELL', '');
+						$tpl->set_var('PACKAGE', strtoupper($value['name']));
+						$tpl->set_var('PACKAGE_PRICE', $value['pret']);
+						$tpl->set_var('PACKAGE_ID', $value['id']);
+						$tpl->parse('list_packages2','list_packages',true);
+					}
 				}
-				else $tpl->parse('list_pachete2', '');
+				else
+				{
+					$tpl->parse('list_pachete2', '');
+					$tpl->parse('list_packages2','');
+				}
 				
 				## parse perioada contractului
 				$tpl->set_block('tpl_ajax','list_perioada','list_perioada2');
@@ -262,7 +278,41 @@ switch($_GET['type'])
 						$total = $total - ($total*$pkInfo['discount']/100);
 					}
 				}
-				$tpl->set_var("TOTAL", $total.'RON');
+				$total = round($total);
+				$_SESSION['new_contract_total'] = $total;
+				$tpl->set_var("TOTAL", $total.' RON');
+				
+				$tpl->pparse('MAIN','tpl_ajax');
+			break;
+			
+			case 'recalculate':
+				$tpl->set_file('tpl_ajax', 'ajax/new-add/summary.tpl');
+				$pkInfo = $pachete->getPachetInfo($_GET['pachet']);
+				$tpl->set_var("PACHET_NUME", $pkInfo['name']);
+				$tpl->set_var("PACHET_PERIOADA", $_GET['perioada'].' luni');
+				$tpl->set_var("PACHET_PRET", $pkInfo['pret'].' RON/luna');
+				$total = $pkInfo['pret'] * $_GET['perioada'];
+				if(!empty($pkInfo['pret']) && !empty($pkInfo['discount']))
+				{
+					if($pkInfo['discount_type']=='month')
+					{
+						$tpl->set_var("PACHET_DISCOUNT", '<h4 class="text-danger">Reducere '.$pkInfo['discount'].'luni din pretul final.</h4>');
+						$total = $total - ($pkInfo['pret'] * $pkInfo['discount']);
+					}
+					else
+					{
+						$tpl->set_var("PACHET_DISCOUNT", '<h4 class="text-danger">Reducere '.$pkInfo['discount'].'% din pretul final.</h4>');
+						$total = $total - ($total*$pkInfo['discount']/100);
+					}
+				}
+				$total = round($total);
+				$_SESSION['new_contract_total'] = $total;
+				$tpl->set_var("TOTAL", $total.' RON');
+				$tpl->pparse('MAIN','tpl_ajax');
+			break;
+			
+			case 'facturare':
+				$tpl->set_file('tpl_ajax', 'ajax/new-add/'.$_GET['tip'].'.tpl');
 				
 				$tpl->pparse('MAIN','tpl_ajax');
 			break;

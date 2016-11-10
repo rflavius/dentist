@@ -1,7 +1,6 @@
 <script src="{SITE_BASE}/resources/plugins/validator/jquery.validate.js" type="text/javascript"></script>
 <script src="{SITE_BASE}/resources/jquery/jquery_mask.min.js" type="text/javascript"></script>
 
-
 <div class='col-sm-12' id="new_contract">
 	<div style='position:fixed;top:40%;left:50%;padding:15px 30px;background:white;border:2px solid #DDDDDD;border-radius:6px;z-index:100;' id='newContractLoading' class='hide'>
 		<span><img src='{SITE_BASE}/images/admin/crontab_loader.gif'></span>
@@ -40,7 +39,7 @@
 						</div>
 						<div class='col-sm-6'>
 							<label>Numele firmei *</label>
-							<input name="nume_firma" size="43"  value="{NUME_FIRMA}" type="text" class='form-control' required>
+							<input name="nume_firma" size="43"  value="{NUME_FIRMA}" type="text" class='form-control' required placeHolder="Numele unitatii dvs ...">
 						</div>
 					</div>
 					<div class='clearfix'>&nbsp;</div>
@@ -67,7 +66,7 @@
 					<div class='form-group'>
 						<div class='col-sm-12'>
 							<label>Adresa *</label>
-							<textarea name="adresa_firma" rows="5" class='form-control' required>{ADRESA_FIRMA}</textarea>
+							<textarea name="adresa_firma" rows="5" class='form-control' required placeHolder="Adresa unitatii ...">{ADRESA_FIRMA}</textarea>
 							<i>Puteti furniza anumite puncte de reper pentru a facilita gasirea locatiei.</i>
 						</div>
 					</div>
@@ -82,26 +81,26 @@
 					<div class='form-group'>
 						<div class='col-sm-4'>
 							<label>Telefon/ Fax/ Mobil</label>
-							<input name="fax" id="fax" value="{FAX}" type="text" class='form-control'>
+							<input name="fax" id="fax" value="{FAX}" type="text" class='form-control' placeHolder="Telefon/Fax/Mobil ...">
 						</div>
 						<div class='col-sm-4'>
 							<label>E-mail</label>
-							<input name="email_firma" maxlength="100" value="{EMAIL_FIRMA}" type="email" class='form-control'>
+							<input name="email_firma" maxlength="100" value="{EMAIL_FIRMA}" type="email" class='form-control' placeHolder="Adresa email ...">
 						</div>
 						<div class='col-sm-4'>
 							<label>Adresa WEB</label>
-							<input name="adresa_web" maxlength="100" value="{ADRESA_WEB}" type="url" class='form-control'>
+							<input name="adresa_web" maxlength="100" value="{ADRESA_WEB}" type="url" class='form-control'  placeHolder="Adresa web ...">
 						</div>
 					</div>
 					<div class='clearfix'>&nbsp;</div>
 					<div class='form-group'>
 						<div class='col-sm-6'>
 							<label>Persoana de contact *</label>
-							<input name="pers_contact" value="{PERS_CONTACT}" type="text" class='form-control' required>
+							<input name="pers_contact" value="{PERS_CONTACT}" type="text" class='form-control' required placeHolder="Numele persoanei de contact ...">
 						</div>
 						<div class='col-sm-6'>
 							<label>E-mail Persoana de contact*</label>
-							<input name="persc_email" value="{PERSC_EMAIL}" type="email" class='form-control' required>
+							<input name="persc_email" value="{PERSC_EMAIL}" type="email" class='form-control' required placeHolder="Email persoana de contact ...">
 						</div>
 					</div>
 					<div class='clearfix'>&nbsp;</div>
