@@ -11,6 +11,7 @@ $conf->max_video_size=$size;
 
 $pachete = new Pachete_Servicii($db);
 $reviews = new Dentist_Reviews();
+$userObj = new Dentist_User();
 
 switch ($action)
 {
@@ -30,158 +31,44 @@ switch ($action)
 		$tpl->set_file("tpl_firm", "user/adauga_firma.tpl");
 		$tpl->set_block('tpl_firm', 'display_cats', 'display_catss');
 		$tpl->set_block('tpl_firm', 'judet', 'judett');
-		$tpl->set_var('LOC_DIV_ADAUGAFIRMA',"Alegeti judetul intai!" );
 		$tpl->set_var('MAX_PICTURE_WIDTH',$conf->max_img_cabinete);
 		$tpl->set_var('DETALIIADAUGAFIRMA','?page=user.detaliiadaugafirma');
 		$tpl->set_var('USERNAME',$_SESSION['userinfo']->username." - " );
 		$user_id  = $_SESSION['userinfo']->id;
-		$get_firme = GetFirme($user_id,"-1");
 		$get_dentist_categ = Get_Dentist_Cats('-1');
-		//print_r($_SESSION['submit_firma']);
 		foreach($get_dentist_categ as $ky => $val)
 		{
-			if(isset($_SESSION['submit_firma'][0])&&($_SESSION['submit_firma'][0]!=""))
-			{
-				$values = explode("=>",$_SESSION['submit_firma'][0]);
-				if($values[1]==$val['id'] )
-				{
-					$tpl->set_var('SELECTTEDCAT',"selected");
-				}
-				else
-				{
-					$tpl->set_var('SELECTTEDCAT',"");
-				}
-			}
 			$tpl->set_var('CAT_NAME',$val['name'] );
 			$tpl->set_var('CAT_ID',$val['id'] );
 			$tpl->parse('display_catss', 'display_cats', true);
 		}
-		$tpl->parse('fara_cabinet_block', 'fara_cabinet', true);
 		$get_dentist_judete = GetJudete();
 		foreach($get_dentist_judete as $ky => $val)
 		{
-			if(isset($_SESSION['submit_firma'][3])&&($_SESSION['submit_firma'][3]!=""))
-			{
-				$values = explode("=>",$_SESSION['submit_firma'][3]);
-				$judt_code = $values[1];
-				if(strtolower($values[1])==strtolower($val['code']) )
-				{		$tpl->set_var('SELECTTEDJUDET',"selected");	}
-				else
-				{		$tpl->set_var('SELECTTEDJUDET',"");		}
-			}
 			$tpl->set_var('COD_JUDET',$val['code'] );
 			$tpl->set_var('NUMEJUDET',$val['name'] );
 			$tpl->parse('judett', 'judet', true);
 		}
-		if(isset($_SESSION['submit_firma'][4])&&($_SESSION['submit_firma'][4])!="")
-		{
-			$tpl->set_file("tpl_loc_ajax","../modules/search/localitati_ajax_faratoate.tpl");
-			$tpl->set_block('tpl_loc_ajax', 'loocalitati', 'loocalitatii');
-			$cod_judet = $judt_code;
-			$get_dentist_localitati = GetLocalitati($cod_judet);
-			$values = explode("=>",$_SESSION['submit_firma'][4]);
-			foreach($get_dentist_localitati as $ky => $val)
-			{
-				if($val['id']==$values[1])
-				{
-					$tpl->set_var('SELECTED_LOC',"selected" );
-				}
-				else
-				{
-					$tpl->set_var('SELECTED_LOC',"" );
-				}
-			
-				$tpl->set_var('ID_LOCALITATE',$val['id'] );
-				$tpl->set_var('NUMELOCALITATE',$val['name'] );
-				$tpl->parse('loocalitatii', 'loocalitati', true);
-			}
-			$tpl->parse('LOC_DIV_ADAUGAFIRMA','tpl_loc_ajax');
-		}
-		else
-		{
-			$tpl->set_var('LOC_DIV_ADAUGAFIRMA','Alegeti localitatea');
-		}
-		
-		if (isset($_SESSION['submit_errors']))
-		{
-			$tpl->set_file('tpl_error', '../info/'.$_SESSION['submit_errors']['type'].'.tpl');
-			$tpl->set_var('MESSAGE', $_SESSION['submit_errors']['message']);
-			$tpl->parse("ERROR_MSG", 'tpl_error');
-			unset($_SESSION['submit_errors']);
-		}
-		
-		#fill fields
-		if (isset($_SESSION['submit_firma']))
-		{
-			foreach ($_SESSION['submit_firma'] as $key => $val)
-			{
-					$values = explode("=>",$val);
-					if($values[0]=="judet")
-					{	$tpl->set_var(strtoupper($values[0]), "selected"); }
-					elseif($values[0]=="perioada")
-					{
-						$tpl->set_var('SELECTED_'.$values[1],"selected" );
-					}
-					elseif($values[0]=="type")
-					{
-							if(($values[1]!="none")&&($values[1]!=""))
-						{
-							$tpl->set_var('SELECTED_'.strtoupper($values[1]),"selected" );
-							$tpl->set_file("tpl_formplace","user/".$values[1].".tpl");
-							$tpl->parse('LOC_FORM_PLACE','tpl_formplace');
-						}
-					}
-					else
-					{	$tpl->set_var(strtoupper($values[0]), $values[1]); }
-			}
-			unset($_SESSION['submit_firma']);
-		}
 		$tpl->set_var('INSERT_FIRMA',"?page=user.insertfirma");
-		
 		$tpl->parse("MAIN", "tpl_firm");
 	break;
 	
 	case 'insertfirma':
-		$array_obligatorii = array("category_id"=>"Categoria nu e setata","nume_firma"=>"Numele firmei nu e setat ","adresa_firma"=>"Adresa firmei nu e setata","judet"=>"Judetul nu e setat","nume_loc_sector"=>"Localitate/sector nu e setat","orar"=>"Nu aveti orar","pers_contact"=>"Persoana de contact nu e setata","persc_email"=>"Adresa de email persoana contact nu e setata","descriere"=>"Descrierea nu e setata");
-		$display_errors = '';
-		foreach($_POST as $ky => $val)
-		{
-			if((array_key_exists($ky,$array_obligatorii))&&($val==""))
-			{
-					$display_errors .= '<li>'. $array_obligatorii[$ky].'.</li>';
-			}
-		}
-		if (array_key_exists('nume_loc_sector', $_POST)===FALSE) 
-		{
-				$display_errors .= "<li>".$array_obligatorii['nume_loc_sector'].".</li>";
-		}
-		#check nume firma
-		$check_nume_firma = CheckNumeFirma($_POST['nume_firma']);
-		if(isset($check_nume_firma)&&($check_nume_firma!=""))
-		{
-			$display_errors .= $check_nume_firma;
-		}
-		if(isset($_POST['persc_email'])&&($_POST['persc_email']!=""))
-		{
-		$email = ValidEmail($_POST['persc_email']);
-		if(!$email)
-		{	$display_errors .="<li>Adresa de e-mail a persoanei de contact este invalida.</li>";	}
-		}
 		
-		if(isset($_POST['adresa_web'])&&($_POST['adresa_web']!=""))
+		if($userObj->validNewAdd())
 		{
-			$url = ValidateURL($_POST['adresa_web']);
-			if(!$url)
-			{	$display_errors .="<li>Adresa web este incorecta.</li>";	}
-
+			$userObj->saveNewAdd();
+			$_SESSION['error']['type'] = 'success';
+			$_SESSION['error']['message'] = 'Anuntul dvs a fost adaugat cu succes si asteapta aprobarea administratorului.';
+			header ('location: '.SITE_BASE.'/admin_utilizator/?page=user.listfirms');
+			exit;
 		}
-		if(isset($_POST['email_firma'])&&($_POST['email_firma']!=""))
+		else 
 		{
-			$url = ValidEmail($_POST['email_firma']);
-			if(!$url)
-				{	$display_errors .="<li>Adresa de e-mail a firmei este invalida.</li>";	}
-
+			header ('location: '.GetReferer());
+			exit;
 		}
+
 		#lets add two images(imaginea de cabinet - imaginea cu harta (unde e situat cabinetul))
 		#this is the image for cabinet
 		$result =  CheckPictureItemCabinet();

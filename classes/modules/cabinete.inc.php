@@ -971,7 +971,6 @@ function CheckPictureItemCabinet()
 	$allowed_extension = array("jpg","jpeg","gif","png");
 	for($i = 1; $i <=4 ; $i++)
 	{
-		
 		$ext = explode(".",$_FILES['picture_'.$i]['name']);
 		$extension = strtolower($ext[count($ext)-1]); // the real extension of the image !!!
 		

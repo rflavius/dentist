@@ -17,6 +17,9 @@ class Dentist_Gallery
 	public $imageName = '';
 	public $imageID = '';
 	public $isBackend = false;
+	private $allowed_types = array("image/pjpeg", "image/jpeg", "image/png", "image/gif");
+	private $allowed_extension = array("jpg", "jpeg", "gif", "png");
+	
 	
 	/*
 	 * the construct method here we initialize the DB and conf objects
@@ -356,5 +359,41 @@ class Dentist_Gallery
 		$result = $a + $b * $final + $c * $final * $final;
 	
 		return max(round($result), 0);
+	}
+	
+	/**
+	 * here we find out what extension does this file have
+	 * @access private
+	 * @param string $name
+	 * @return string
+	 */
+	private function getFileExtension($name)
+	{
+		// the real extension of the image !!!
+		return strtolower(substr($name, strrchr($name, "."))); 
+	}
+	
+	/**
+	 * here we validate the image for location on map
+	 * @access public
+	 * @param string $file
+	 * @throws Exception
+	 * @return boolean
+	 */
+	public function validateMapImage($file)
+	{
+		try
+		{
+			if(!empty($file))
+			{
+				$extension = $this->getFileExtension($file);
+				if(!in_array($extension, $this->allowed_extension)) throw new Exception('Imaginea pentru localizare pe harta nu este valida.');
+			}
+		} 
+		catch (Exception $e)
+		{
+			throw $e;
+		}
+		return true;
 	}
 }

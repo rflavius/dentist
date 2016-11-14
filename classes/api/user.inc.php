@@ -839,17 +839,23 @@ function InsertPartFromFirma($nume_firma,$user_id,$type,$perioada)
 	$db->query($query);
 	return $db->last_insert_id();
 }
+
+/**
+ * here we check if the submitted name for the add is already in the DB
+ * @param string $nume_firma
+ * @return string
+ */
 function CheckNumeFirma($nume_firma)
 {
-	global $db;
-		$query = "SELECT * FROM cabinete WHERE nume_firma= '".addslashes($nume_firma)."'";
-		$db->query($query);
-		if($db->affected_rows()>0)
-		{
-			return "<li> Acest nume de firma exista deja <li>";
-		}
-		
+	$db = Zend_Registry::get('database');
+	$select = $db->select()
+					->from('cabinete', 'id')
+					->where('LOWER(nume_firma) = ?', strtolower($nume_firma));
+	$results = $db->fetchAll($select);
+	if(count($results)>0) return "Acest nume de firma exista deja.";
+	else return '';
 }
+
 function GetFirme($user_id,$firm_id=-1)
 {
 		global $db;$info=array();$i=0;

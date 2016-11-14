@@ -1,6 +1,9 @@
 <script src="{SITE_BASE}/resources/plugins/validator/jquery.validate.js" type="text/javascript"></script>
 <script src="{SITE_BASE}/resources/jquery/jquery_mask.min.js" type="text/javascript"></script>
 
+<div id='ajaxResponse'></div>
+<div class='clearfix'>&nbsp;</div>
+
 <div class='col-sm-12' id="new_contract">
 	<div style='position:fixed;top:40%;left:50%;padding:15px 30px;background:white;border:2px solid #DDDDDD;border-radius:6px;z-index:100;' id='newContractLoading' class='hide'>
 		<span><img src='{SITE_BASE}/images/admin/crontab_loader.gif'></span>
@@ -14,8 +17,7 @@
 	</ul>
 	<form name="adauga_firma" method="post" action="{INSERT_FIRMA}" enctype="multipart/form-data" class='form' id="orderForm">
 		<input type='hidden' name='current_step' id='current_step' value='1'>
-		<input type="hidden" name="cost_final" value="{SEL_COST_FINAL}">
-		<input type="hidden" name="selected_level" value="{DEFAULT_LEVEL}">
+		<input type='hidden' name='picture_max_width' value='{MAX_PICTURE_WIDTH}'>
 		
 		<div class="tab-content">
 			<div id="step1" class="tab-pane fade in active">
@@ -23,7 +25,7 @@
 					<h3>Info firma</h3>
 				</div>
 				<div class='col-sm-12 lead'>
-					<i class="fa fa-question-circle" aria-hidden="true" style='font-size:24px;'></i>&nbsp;Ai nevoie de ajutor? Vezi exemplul adaugare firma, [ <a href="{DETALIIADAUGAFIRMA}"><b>click aici</b></a> ]
+					<i class="fa fa-question-circle" aria-hidden="true" style='font-size:24px;'></i>&nbsp;Ai nevoie de ajutor? Vezi exemplul adaugare firma, [ <a href="{DETALIIADAUGAFIRMA}" target='_blank'><b>click aici</b></a> ]
 				</div>
 				<div class='clearfix'>&nbsp;</div>
 				<div class='jumbotron'>
@@ -74,7 +76,7 @@
 					<div class='form-group'>
 						<div class='col-sm-12'>
 							<label>Imagine Localizare</label>
-							<input type="file" name="picture_harta">
+							<input type="file" name="picture_harta" id='picture_harta'>
 						</div>
 					</div>
 					<div class='clearfix'>&nbsp;</div>
@@ -89,7 +91,7 @@
 						</div>
 						<div class='col-sm-4'>
 							<label>Adresa WEB</label>
-							<input name="adresa_web" maxlength="100" value="{ADRESA_WEB}" type="url" class='form-control'  placeHolder="Adresa web ...">
+							<input name="adresa_web" maxlength="100" value="{ADRESA_WEB}" type="text" class='form-control'  placeHolder="Adresa web ...">
 						</div>
 					</div>
 					<div class='clearfix'>&nbsp;</div>

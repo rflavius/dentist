@@ -25,7 +25,7 @@
 		<div class='col-sm-12'>
 			<label>Servicii si Tarife</label>
 			<textarea name="tarife" rows="6" class='form-control'>{TARIFE}</textarea><br>
-			<p><input type="file" name="servicii" size="43"><br> Puteti adauga fisier PDF sau fisier Microsoft Office.</p>
+			<p><input type="file" id='servicii_file' name="servicii" size="43"><br> Puteti adauga fisier PDF sau fisier Microsoft Office.</p>
 		</div>
 	</div>
 	<div class='clearfix'>&nbsp;</div>
@@ -41,7 +41,7 @@
 	<div class='form-group'>
 		<div class='col-sm-12'>
 			<label>Video</label>
-			<p><input type="file" name="video" size="43"><br>Dimensiunea maxima a fisierului video: 8Mb.</p>
+			<p><input type="file" id='video_file' name="video" size="43"><br>Dimensiunea maxima a fisierului video: 8Mb.</p>
 		</div>
 	</div>
 	<div class='clearfix'>&nbsp;</div>
@@ -49,7 +49,7 @@
 		<div class='col-sm-12'>
 			<label>Banner publicitar</label>
 			<p>
-				<input type="file" name="banner" size="43"><br>
+				<input type="file" id='banner_file' name="banner" size="43"><br>
 				Dimensiunea acceptata este : 210x80px. Imaginea trebuie sa aiba una din urmatoarele extensii: jpg, gif, png .
 			</p>
 		</div>
@@ -58,7 +58,7 @@
 	<div class='form-group'>
 		<div class='col-sm-12'>
 			<label>Galerie imagini</label>
-			<p><input type="file" name="galery" multiple size="43"><br>Puteti selecta mai multe imagini odata pentru a fii adaugate.</p>
+			<p><input type="file" id='gallery_file' name="galery" multiple size="43"><br>Puteti selecta mai multe imagini odata pentru a fii adaugate.</p>
 		</div>
 	</div>
 	<div class='clearfix'>&nbsp;</div>

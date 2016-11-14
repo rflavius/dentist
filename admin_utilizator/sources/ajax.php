@@ -193,7 +193,6 @@ switch($_GET['type'])
 			break;
 			
 			case '3':
-				
 				$tpl->set_file('tpl_ajax', 'ajax/new-add/step3.tpl');
 				// list pachete
 				$tpl->set_block('tpl_ajax', 'list_pachete', 'list_pachete2');
@@ -315,6 +314,31 @@ switch($_GET['type'])
 				$tpl->set_file('tpl_ajax', 'ajax/new-add/'.$_GET['tip'].'.tpl');
 				
 				$tpl->pparse('MAIN','tpl_ajax');
+			break;
+			
+			case 'validate':
+				$userObj = new Dentist_User();
+				parse_str($_GET['data'], $data);
+				print_a($data);exit;
+				if($userObj->validNewAdd($_GET['what'], $data))
+				{
+					$tpl->set_file('tpl_error', '../info/info.tpl');
+					$tpl->set_var('MESSAGE', 'Felicitari, pasul precedent a fost completat cu succes.');
+					$tpl->parse('ERROR_BLOCK', 'tpl_error');
+					$html = $tpl->get_var('ERROR_BLOCK');
+					$response = array('type' => 'success', 'html' => $html);
+				}
+				else
+				{
+					$tpl->set_file('tpl_error', '../info/error.tpl');
+					$tpl->set_var('MESSAGE', $_SESSION['error']['message']);
+					$tpl->parse('ERROR_BLOCK', 'tpl_error');
+					$html = $tpl->get_var('ERROR_BLOCK');
+					unset($_SESSION['error']);
+					$response = array('type' => 'error', 'html' => $html);
+				}
+				
+				echo json_encode($response);exit;
 			break;
 		}
 	break;
