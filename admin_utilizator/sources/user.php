@@ -54,11 +54,9 @@ switch ($action)
 	break;
 	
 	case 'insertfirma':
-		
-		if($userObj->validNewAdd())
+		if($userObj->saveNewAdd())
 		{
-			$userObj->saveNewAdd();
-			$_SESSION['error']['type'] = 'success';
+			$_SESSION['error']['type'] = 'info';
 			$_SESSION['error']['message'] = 'Anuntul dvs a fost adaugat cu succes si asteapta aprobarea administratorului.';
 			header ('location: '.SITE_BASE.'/admin_utilizator/?page=user.listfirms');
 			exit;

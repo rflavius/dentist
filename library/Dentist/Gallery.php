@@ -374,22 +374,57 @@ class Dentist_Gallery
 	}
 	
 	/**
-	 * here we validate the image for location on map
+	 * here we validate the servicii and tarife file
 	 * @access public
-	 * @param string $file
+	 * @param string $name
 	 * @throws Exception
 	 * @return boolean
 	 */
-	public function validateMapImage($file)
+	public function validateFile($name, $type)
 	{
 		try
 		{
-			if(!empty($file))
+			if(!empty($name))
 			{
-				$extension = $this->getFileExtension($file);
-				if(!in_array($extension, $this->allowed_extension)) throw new Exception('Imaginea pentru localizare pe harta nu este valida.');
+				
+				switch ($type)
+				{
+					case 'servicii_file':
+						$required = array("pdf","doc");
+						$error = "Extensia fisierului pentru Servicii si Tarife nu este valida.";
+						if(!in_array($extension, $required)) throw new Exception($error);
+					break;
+					
+					case 'map_file':
+						$required = $this->allowed_extension;
+						$error = "Imaginea pentru localizare pe harta nu este valida.";
+						if(!in_array($extension, $required)) throw new Exception($error);
+					break;
+					
+					case 'video_file':
+						$required = array("mpg", "mpeg", "avi", "swf", "wav", "mp3", "au", "mid", "mpeg");
+						$error = "Fisierul video nu este valid.";
+						if(!in_array($extension, $required)) throw new Exception($error);
+					break;
+					
+					case 'banner_file':
+						$required = $this->allowed_extension;
+						$error = "Imaginea pentru banner nu este valida.";
+						if(!in_array($extension, $required)) throw new Exception($error);
+					break;
+					
+					case 'gallery_file':
+						$files = explode(";", $name);
+						$required = $this->allowed_extension;
+						foreach ($files as $key => $value)
+						{
+							$extension = $this->getFileExtension($value);
+							if(!in_array($extension, $required)) throw new Exception('Fisierul: '.$value.' - nu are o extensie valida.');
+						}
+					break;
+				}
 			}
-		} 
+		}
 		catch (Exception $e)
 		{
 			throw $e;

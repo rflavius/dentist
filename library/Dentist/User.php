@@ -12,7 +12,7 @@
  * @package    DentistLibrary
  */
  
-class Dentist_User
+class Dentist_User extends Dentist_Cabinete
 {
 	/*
 	 * the construct method here we initialize the DB and conf objects
@@ -22,8 +22,7 @@ class Dentist_User
 	 */
 	public function __construct()
 	{
-		$this->db = Zend_Registry::get('database');
-		$this->conf = Zend_Registry::get('settings');
+		parent::__construct();
 	}
 	
 	/**
@@ -37,7 +36,6 @@ class Dentist_User
 	{
 		try
 		{
-			$galleryObj = new Dentist_Gallery();
 			switch ($step)
 			{
 				case '1':
@@ -58,7 +56,7 @@ class Dentist_User
 					}
 					if(!empty(CheckNumeFirma($data['nume_firma']))) throw new Exception('Acest nume de firma exista deja in baza noastra de date.');
 					
-					$galleryObj->validateMapImage($data['file']);
+					$this->galleryObj->validateFile($data['file'], 'map_file');
 				break;
 				
 				case '2':
@@ -72,9 +70,41 @@ class Dentist_User
 							throw new Exception($array_obligatorii[$ky]);
 						}
 					}
+					
+					$this->galleryObj->validateFile($data['servicii_file'], 'servicii_file');
+					$this->galleryObj->validateFile($data['video_file'], 'video_file');
+					$this->galleryObj->validateFile($data['banner_file'], 'banner_file');
+					$this->galleryObj->validateFile($data['gallery_file'], 'gallery_file');
 				break;
 			}
 		} 
+		catch (Exception $e)
+		{
+			$_SESSION['error']['type'] = 'error';
+			$_SESSION['error']['message'] = $e->getMessage();
+			return false;
+		}
+		return true;
+	}
+	
+	public function saveNewAdd()
+	{
+		try
+		{
+			if(empty($_SESSION['userinfo'])) throw new Exception('Sesiunea dvs a expirat va rugam sa va autentificati din nou.');
+			
+			$data = array(
+							'nume_firma' => $_POST['nume_firma'], 
+							'user_id' => $_SESSION['userinfo']->id, 
+							'submision_date' => new Zend_Db_Expr('NOW()'), 
+							'meta_description' => $this->conf->def_meta_description, 
+							'meta_keywords' => $this->conf->def_meta_keywords, 
+							'type' => $_POST['type'], 
+							'expire_date' => $this->calculateExpireDate($_POST['perioada']), 
+							'alias' => GenerateAlias($_POST['nume_firma']));
+			$this->addCabinet($data);
+			
+		}
 		catch (Exception $e)
 		{
 			$_SESSION['error']['type'] = 'error';

@@ -101,41 +101,42 @@ function nextStep(step, refresh = true)
 {
 	if(jQuery("#orderForm").valid())
 	{
-		if(validStep(step))
-		{
-			// calculate the next step
-			if(refresh == false)
-			{
-				var next_step = +step + 1;
-			}
-			else
-			{
-				var next_step = step;
-			}
-			
-			// a few more validations and checkings
-			jQuery('#newContractLoading').removeClass('hide').addClass('show');
-			jQuery.ajax({
-				type: "GET",
-				url: "../admin_utilizator/sources/ajax.php",
-				data: {type: 'new-add', step: next_step, data: jQuery("#orderForm :input").serialize()}
-			})
-			.done(function(html)
-			{
-				jQuery('#current_step').attr('value', next_step);
-				playNewContractNavigation(next_step);
-				jQuery('#step'+next_step).html(html);
-				
-				jQuery('#newContractLoading').removeClass('show').addClass('hide');
-			});
-		}
+		validStep(step, refresh);
 	}
+}
+
+function showNextStep(step, refresh)
+{
+	// calculate the next step
+	if(refresh == false)
+	{
+		var next_step = +step + 1;
+	}
+	else
+	{
+		var next_step = step;
+	}
+	
+	// a few more validations and checkings
+	jQuery('#newContractLoading').removeClass('hide').addClass('show');
+	jQuery.ajax({
+		type: "GET",
+		url: "../admin_utilizator/sources/ajax.php",
+		data: {type: 'new-add', step: next_step, data: jQuery("#orderForm :input").serialize()}
+	})
+	.done(function(html)
+	{
+		jQuery('#current_step').attr('value', next_step);
+		playNewContractNavigation(next_step);
+		jQuery('#step'+next_step).html(html);
+		jQuery('#newContractLoading').removeClass('show').addClass('hide');
+	});
 }
 
 /**
  * here we validate the step using PHP validatin if we need
  */
-function validStep(step)
+function validStep(step, refresh)
 {
 	var error = true;
 	var data = jQuery("#orderForm :input").serializeArray(); // convert form to array
@@ -153,7 +154,8 @@ function validStep(step)
 		var imgs = '';
 		for (var i = 0; i < gallery.length; i++)
 		{
-			imgs[i] = gallery[i].name;
+			if(i==0) imgs = gallery[i].name;
+			else imgs = imgs+";"+gallery[i].name;
 		}
 		data.push({name: "gallery_file", value: imgs});
 	}
@@ -166,14 +168,14 @@ function validStep(step)
 	.done(function(html)
 	{
 		var result = JSON.parse(html);
+		if(result.type != 'error')
+		{
+			// if it's valid then show the next step
+			showNextStep(step, refresh)
+		}
 		jQuery('#ajaxResponse').html(result.html);
 		jQuery('html, body').animate({scrollTop: jQuery("#ajaxResponse").offset().top}, 2000);
-		if(result.type == 'error')
-		{
-			error = false;
-		}
 	});
-	return Boolean(error);
 }
 
 /**
