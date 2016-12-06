@@ -245,7 +245,7 @@ switch ($action )
 				$all_anunturi = GetAnunturiGeneral("all",$limit);
 				while (list($k, $v) = each($all_anunturi))
 				{
-					$tpl->set_var('TITLU_ANUNT', ucfirst(strtolower($v['titlu'])));
+					$tpl->set_var('TITLU_ANUNT', ucfirst($v['titlu']));
 					$tpl->set_var('DESCRIERE', text_best_fit(ucfirst(strtolower(strip_tags($v['continut']))),130));
 				
 					$cat_name = GetAnunturiCategoryInfos($v['category_id']);
