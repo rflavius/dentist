@@ -370,7 +370,7 @@ class Dentist_Gallery
 	private function getFileExtension($name)
 	{
 		// the real extension of the image !!!
-		return strtolower(substr($name, strrchr($name, "."))); 
+		return strtolower(substr(strrchr($name, "."), 1));
 	}
 	
 	/**
@@ -386,7 +386,7 @@ class Dentist_Gallery
 		{
 			if(!empty($name))
 			{
-				
+				$extension = $this->getFileExtension($name);
 				switch ($type)
 				{
 					case 'servicii_file':
@@ -430,5 +430,45 @@ class Dentist_Gallery
 			throw $e;
 		}
 		return true;
+	}
+	
+	public function saveCabinetGallery()
+	{
+		$filename = GenerateImageNameCabinete($_FILES['uploadedfile']['name']);
+		//echo $filename;exit;
+		$uploaddir = '../images/users_cabinete/'.$_GET['firma_id'].'/';
+		saveBigImage('../images/bigimages/'.$filename);
+		
+		if(is_dir($uploaddir))
+		{
+			chmod($uploaddir,0777);
+		}
+		else
+		{
+			mkdir($uploaddir, 0777);
+			chmod($uploaddir, 0777);
+		}
+		//echo $uploaddir.$filename;exit;
+		$m2 = copy('../images/bigimages/'.$filename, $uploaddir.$filename);
+		
+		
+		$sql = "INSERT INTO images(`image_name`, `folder_id`, `type`,`position`) VALUES ('".$filename."','".$_GET['firma_id']."','cabinet','')";
+		$db->query($sql);
+		
+		
+		$imagefile["name"] = $filename;
+		$imagefile["item_id"] = $_GET['firma_id'];
+		$imagefile["tmp_name"] = '';
+		$type = explode(".",$imagefile["name"]);
+		$imagefile["type"] = $type[count($type)-1];
+		$imagefile["error"] = '';
+		$imagefile["folder_name"] ='../images/users_cabinete/'.$_GET['firma_id']."/";
+		
+		$cachedir = $imagefile["folder_name"];
+		
+		
+		$file_name = $imagefile['name'];
+		$a = Generate_Image("",$imagefile,$type="photos",$filename,$cachedir);
+		
 	}
 }

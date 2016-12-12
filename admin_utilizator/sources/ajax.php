@@ -319,6 +319,7 @@ switch($_GET['type'])
 			case 'validate':
 				$userObj = new Dentist_User();
 				parse_str($_GET['data'], $data);
+				//print_a($data);exit;
 				if($userObj->validNewAdd($_GET['what'], $data))
 				{
 					$tpl->set_file('tpl_error', '../info/info.tpl');

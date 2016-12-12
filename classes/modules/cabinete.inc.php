@@ -142,8 +142,7 @@ function GetAllAnunturiForUser($user_id,$status=false)
 	
 }
 
-
-function SavePicturesCabinete ($id,$front_back)
+function SavePicturesCabinete ($id, $front_back)
 {
 	global $conf;	global $db;
 	$uploaddir = '../images/users_cabinete/'.$id.'/';	

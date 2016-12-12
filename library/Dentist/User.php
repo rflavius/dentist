@@ -87,6 +87,13 @@ class Dentist_User extends Dentist_Cabinete
 		return true;
 	}
 	
+	/**
+	 * insert the new add for dentist
+	 * @access public
+	 * @param none
+	 * @throws Exception
+	 * @return boolean
+	 */
 	public function saveNewAdd()
 	{
 		try
@@ -101,8 +108,31 @@ class Dentist_User extends Dentist_Cabinete
 							'meta_keywords' => $this->conf->def_meta_keywords, 
 							'type' => $_POST['type'], 
 							'expire_date' => $this->calculateExpireDate($_POST['perioada']), 
-							'alias' => GenerateAlias($_POST['nume_firma']));
+							'alias' => GenerateAlias($_POST['nume_firma']),
+							'category_id' => $_POST['category_id'],
+							'adresa_firma' => $_POST['adresa_firma'],
+							'judet' => $_POST['judet'],
+							'nume_loc_sector' => $_POST['nume_loc_sector'],
+							'fax' => $_POST['fax'],
+							'echipa_medicala' => strip_tags($_POST['echipa_medicala'], '<p><font><b><br><strong><i><u><font>'),
+							'email_firma' => $_POST['email_firma'],
+							'adresa_web' => $_POST['adresa_web'],
+							'orar' => strip_tags($_POST['orar'], '<p><font><b><br><strong><i><u><font>'),
+							'descriere' => strip_tags(RemoveAHref($_POST['descriere']), '<p><font><b><br><strong><i><u><font>'),
+							'tarife' => strip_tags($_POST['tarife'], '<p><font><b><br><strong><i><u><font>'),
+							'pers_contact' => $_POST['pers_contact'],
+							'persc_contact' => $_POST['persc_contact'],
+							'persc_adresa' => $_POST['persc_adresa'],
+							'zip_code' => $_POST['zip_code'],
+							'type' => $_POST['type'],
+			);
 			$this->addCabinet($data);
+			
+			#let's insert cabinet to his category
+			InsertCabinetToCat($this->cabinetID, $_POST['category_id'], $_POST['judet']);
+			
+			$this->addCabinetMedia();
+			
 			
 		}
 		catch (Exception $e)

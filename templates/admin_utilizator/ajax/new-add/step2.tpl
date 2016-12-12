@@ -58,7 +58,7 @@
 	<div class='form-group'>
 		<div class='col-sm-12'>
 			<label>Galerie imagini</label>
-			<p><input type="file" id='gallery_file' name="galery" multiple size="43"><br>Puteti selecta mai multe imagini odata pentru a fii adaugate.</p>
+			<p><input type="file" id='gallery_file' name="galery[]" multiple size="43"><br>Puteti selecta mai multe imagini odata pentru a fii adaugate.</p>
 		</div>
 	</div>
 	<div class='clearfix'>&nbsp;</div>

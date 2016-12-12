@@ -54,6 +54,8 @@ switch ($action)
 	break;
 	
 	case 'insertfirma':
+		print_a($_FILES);exit;
+		
 		if($userObj->saveNewAdd())
 		{
 			$_SESSION['error']['type'] = 'info';
@@ -66,106 +68,6 @@ switch ($action)
 			header ('location: '.GetReferer());
 			exit;
 		}
-
-		#lets add two images(imaginea de cabinet - imaginea cu harta (unde e situat cabinetul))
-		#this is the image for cabinet
-		$result =  CheckPictureItemCabinet();
-		if ($result == '0')
-		{
-			$display_errors .=  '<li>'.'Imaginile pentru cabinet nu au extensiile acceptate!'.'</li>';
-		}
-		elseif ($result == '1')
-		{
-			$display_errors .= '<li>'. 'Imaginii cabinet - Va rugam respectati dimensiunile maxime admise!'.'</li>';
-		}
-
-		#this is for map...harta cabinet
-		if ($_FILES['picture_harta']['type']!= "")
-		{#function saved in classes/api/user.inc!!!!!!!!!!!!!!!!
-			$result = CheckPictureItemHarta();
-			if ($result == '0')
-			{
-				$display_errors .=  '<li>'. 'Imaginea pentru harta nu are una din extensiile acceptate!'.'</li>';
-			}
-			elseif ($result == '1')
-			{
-			$display_errors .=  '<li>'.'Imagine harta - Va rugam respectati dimensiunile maxime admise!'.'</li>';
-			}
-		}
-
-
-		if($display_errors!="")
-		{
-			#let_put in sessions all infos from post in case we have errors
-			$_SESSION['submit_errors']['message'] = $display_errors;
-			$_SESSION['submit_errors']['type'] = 'error';
-			$_SESSION['submit_firma']=array();
-			foreach($_POST as $ky => $val)
-			{
-				$info = $ky ."=>".$val;	array_push($_SESSION['submit_firma'],$info);
-			}
-			header('location: '.GetReferer());
-			exit;
-		}
-
-
-		$user_id = $_SESSION['userinfo']->id;
-		array_pop($_POST);
-		#insert infos about cabinet ,we take the id of cabinet
-		/*$type = $_POST['type'];
-		$id_some_info = InsertPartFromFirma($_POST['nume_firma'],$user_id,$type,$_POST['perioada']);*/
-		$type = $_POST['type'];
-		$id_some_info = InsertPartFromFirma($_POST['nume_firma'],$user_id,$type,1);
-
-		$i=0;
-		foreach($_POST as $ky => $val)
-		{
-			if(strpos($ky,"caractere")!==FALSE)
-			{
-				unset($_POST[$ky]);
-			}
-			else
-			{
-				if($i==0)
-				{
-					$vars = "`".$ky."`='".mysql_real_escape_string(strip_tags($val,'<p><font><b><br><strong><i><u><font>'))."'";
-				}
-				else
-				{
-					$vars.= ", `".$ky."`='".mysql_real_escape_string(strip_tags($val,'<p><font><b><br><strong><i><u><font>'))."'";
-				}
-				$i++;
-			}
-		}
-
-		$query="UPDATE cabinete SET ".$vars." WHERE id='".$id_some_info."'";
-		$db->query($query);
-
-		#let's insert cabinet to his category
-		$inser_cab_to_cat = InsertCabinetToCat($id_some_info,$_POST['category_id'],$_POST['judet']);
-		
-		#daca avem poza pt harta o salvam:D
-		if ($_FILES['picture_harta']['type'] != "" )
-		{
-			$extension = explode('/',$_FILES['picture_harta']['type']);
-			$file_extension = $extension[1];
-			SavePicturesMap($file_extension, $id_some_info,"frontend" );
-			unset($_FILES['picture_harta']);
-		}
-		SavePicturesCabinete($id_some_info,"frontend" );
-
-
-
-		if(count($_FILES)>0)
-		{
-				GenerateSmallImages($id_some_info);	#let's create small images for cabinet
-		}
-		
-
-		$_SESSION['submit_errors']['type']='info';
-		$_SESSION['submit_errors']['message'] = "Pasul precedent a fost finalizat cu succes.";
-		header('location: ?page=user.addfirm2.'.$id_some_info);
-		exit;
 	break;
 
 	case 'addfirm2':

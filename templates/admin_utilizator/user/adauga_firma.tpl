@@ -25,7 +25,7 @@
 					<h3>Info firma</h3>
 				</div>
 				<div class='col-sm-12 lead'>
-					<i class="fa fa-question-circle" aria-hidden="true" style='font-size:24px;'></i>&nbsp;Ai nevoie de ajutor? Vezi exemplul adaugare firma, [ <a href="{DETALIIADAUGAFIRMA}" target='_blank'><b>click aici</b></a> ]
+					<i class="fa fa-info-circle" aria-hidden="true" style='font-size:24px;padding:2px;'></i>&nbsp;Ai nevoie de ajutor? Vezi exemplul adaugare firma, [ <a href="{DETALIIADAUGAFIRMA}" target='_blank'><b>click aici</b></a> ]
 				</div>
 				<div class='clearfix'>&nbsp;</div>
 				<div class='jumbotron'>

@@ -717,7 +717,8 @@ function ChechIfHasfirmAdd($user_id)
 	return false;
 	
 }
-function SavePicturesMap ($file_extension, $id,$front_back)
+
+function SavePicturesMap ($file_extension, $id, $front_back)
 {
 	global $conf;	global $db;
 	
